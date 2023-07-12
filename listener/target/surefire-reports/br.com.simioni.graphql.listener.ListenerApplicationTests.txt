@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: br.com.simioni.graphql.listener.ListenerApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 4.207 s - in br.com.simioni.graphql.listener.ListenerApplicationTests
