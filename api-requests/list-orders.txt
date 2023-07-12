@@ -1,0 +1,5 @@
+curl --location 'http://174.101.101.103:8080/graphql' \
+--header 'Content-Type: application/json' \
+--data '{
+  "query": "query { placedOrders { order, items { name, image, qty, cost, currency }, total } }"
+}'

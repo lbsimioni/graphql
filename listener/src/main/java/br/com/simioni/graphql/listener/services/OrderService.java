@@ -18,6 +18,11 @@ public class OrderService {
     @Autowired
     private final OrderRepository orderRepository;
 
+    /**
+     * Method responsible to get order base data, process (calculate total cost and generate creationDate)
+     * and save in database (mongodb)
+     * @param order Order to be process
+     */
     public void processOrderMessage(final Order order) {
         try {
             this.orderRepository.save(OrderConverter.convert(order.toBuilder().createdAt(LocalDateTime.now().toString()).build()));

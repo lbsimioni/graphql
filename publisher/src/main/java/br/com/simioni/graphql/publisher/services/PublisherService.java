@@ -25,6 +25,11 @@ public class PublisherService {
     @Autowired
     private final OrderRepository orderRepository;
 
+    /**
+     * Method responsible to post order message in pub-sub
+     * @param order Object to be post
+     * @return Object posted
+     */
     public Order publishOrderMessage(final Order order) {
         final var json = JsonUtil.toJson(order);
         log.info("Trying publish order message in pub-sub: {}", json);
@@ -33,12 +38,16 @@ public class PublisherService {
             this.pubSubIntegration.sendToPubSub(json);
             log.info("Message published with success");
             return order;
-        } catch (final Exception e) {
+        } catch (final RuntimeException e) {
             log.error("Error while publish message in pub-sub", e);
-            throw new RuntimeException(e);
+            throw e;
         }
     }
 
+    /**
+     * Method responsible to list all orders 
+     * @return List with all orders in database
+     */
     public List<Order> findAll() {
         return this.orderRepository.findAll()
                 .stream()

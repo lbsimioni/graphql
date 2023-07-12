@@ -1,0 +1,25 @@
+spring:
+  data:
+    mongodb:
+      authentication-database: admin
+      username: root
+      password: admin123
+      database: ORDER
+      port: 27017
+      host: 174.101.101.102
+      repositories:
+        enabled: true
+    jpa:
+      hibernate:
+        ddl-auto: none
+  graphql:
+    graphiql:
+      enable: true
+  cloud:
+    gcp:
+      project-id: pubsub-graphql
+      pubsub:
+        emulator-host: 174.101.101.101:8681
+graphql:
+  servlet:
+    exception-handlers-enabled: true

@@ -60,6 +60,20 @@ services:
       graphql-network:
         ipv4_address: 174.101.101.104
 
+  frontend:
+    depends_on:
+      - listener
+      - publisher
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: frontend
+    ports:
+      - "3000:3000"
+    networks:
+      graphql-network:
+        ipv4_address: 174.101.101.105
+
 networks:
   graphql-network:
     driver: bridge
