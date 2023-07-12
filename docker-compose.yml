@@ -1,0 +1,69 @@
+version: '3.8'
+
+services:
+  pubsub:
+    image: thekevjames/gcloud-pubsub-emulator:latest
+    environment:
+      - PUBSUB_PROJECT1=pubsub-graphql,order-topic:order-topic-sub
+      - PUBSUB_EMULATOR_HOST=174.101.101.101:8681
+    ports:
+      - "8681:8681"
+    networks:
+      graphql-network:
+        ipv4_address: 174.101.101.101
+
+  mongo:
+    image: bitnami/mongodb:4.4
+    hostname: mongodb
+    restart: always
+    labels:
+      kompose.service.type: nodeport
+    ports:
+      - "27017:27017"
+    volumes:
+      - '/etc/localtime:/etc/localtime:ro'
+      - './docker/database:/docker-entrypoint-initdb.d'
+    environment:
+      - MONGODB_ROOT_PASSWORD=admin123
+      - MONGODB_USERNAME=username
+      - MONGODB_PASSWORD=password
+      - MONGODB_DATABASE=ORDER
+    networks:
+      graphql-network:
+        ipv4_address: 174.101.101.102
+
+  publisher:
+    depends_on:
+      - pubsub
+      - mongo
+    build:
+      context: ./publisher
+      dockerfile: Dockerfile
+    container_name: publisher
+    ports:
+      - "8080:8080"
+    networks:
+      graphql-network:
+        ipv4_address: 174.101.101.103
+
+  listener:
+    depends_on:
+      - pubsub
+      - mongo
+    build:
+      context: ./listener
+      dockerfile: Dockerfile
+    container_name: listener
+    ports:
+      - "8081:8081"
+    networks:
+      graphql-network:
+        ipv4_address: 174.101.101.104
+
+networks:
+  graphql-network:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 174.101.101.0/24
