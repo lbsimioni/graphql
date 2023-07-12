@@ -1,0 +1,43 @@
+input ItemDTO {
+    name: String!
+    image: String!
+    qty: Int!
+    cost: Float!
+    currency: String!
+}
+
+input OrderDTO {
+    order: String!
+    origin: String!
+    items: [ItemDTO!]!
+}
+
+type Item {
+    name: String!
+    image: String!
+    qty: Int!
+    cost: Float!
+    currency: String!
+}
+
+type Order {
+    order: String!
+    origin: String!
+    items: [Item!]!
+}
+
+type OrderResponse {
+    order: String!
+    origin: String!
+    items: [Item!]!
+    total: Float!
+    createdAt: String!
+}
+
+type Mutation {
+    publishPlacedOrderMessage(order: OrderDTO!): Order
+}
+
+type Query {
+    placedOrders: [OrderResponse]
+}
