@@ -21,15 +21,15 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Listagem de Ordens</title>
+        <title>Listagem de Pedidos</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className='container'>
-        <h2 className="text-center my-3">Lista de Ordens</h2>
+        <h2 className="text-center my-3">Listagem de Pedidos</h2>
         {orders.length === 0 && (
           <div className="alert alert-warning" role="alert">
-            Nenhuma ordem registrada! Faça a criação das ordens pela API, conforme indicado na documentação...
+            Nenhum pedido registrada! Faça a criação dos pedidos pela API, conforme indicado na documentação...
           </div>
         )}
         {orders.map(order => {
